@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Gender__c</fullName>
+    <label>Gender</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Masculino</fullName>
+                <default>false</default>
+                <label>Masculino</label>
+            </value>
+            <value>
+                <fullName>Femenino</fullName>
+                <default>false</default>
+                <label>Femenino</label>
+            </value>
+            <value>
+                <fullName>No binario</fullName>
+                <default>false</default>
+                <label>No binario</label>
+            </value>
+            <value>
+                <fullName>Genderqueer</fullName>
+                <default>false</default>
+                <label>Genderqueer</label>
+            </value>
+            <value>
+                <fullName>Genderfluid</fullName>
+                <default>false</default>
+                <label>Genderfluid</label>
+            </value>
+            <value>
+                <fullName>Agénero</fullName>
+                <default>false</default>
+                <label>Agénero</label>
+            </value>
+            <value>
+                <fullName>Transgénero</fullName>
+                <default>false</default>
+                <label>Transgénero</label>
+            </value>
+            <value>
+                <fullName>Prefiero no decir</fullName>
+                <default>false</default>
+                <label>Prefiero no decir</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
