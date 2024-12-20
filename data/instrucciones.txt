@@ -1,0 +1,11 @@
+EXPORT DATA
+Si quieres descargar la data de algun objeto de tu organización, puedes hacerlo de la siguiente manera:
+
+1- Vas a ejecutar el siguiente comando en tu terminal: sf data export tree --query "SELECT Id, Name, (SELECT Name, Address__c FROM Properties__r) FROM Broker__c" -d data 
+
+2- tener claro que para el comando anterior deberas tener el query previamente filtrado.
+
+IMPORT DATA
+Si quieres importar la data de algun objeto de tu organización, puedes hacerlo de la siguiente manera:
+
+1- Vas a ejecutar el siguiente comando en tu terminal: sf data import tree --plan data/data-contacts.json

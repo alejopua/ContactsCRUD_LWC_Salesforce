@@ -1,0 +1,124 @@
+{
+  "records": [
+    {
+      "attributes": {
+        "type": "Contacts__c",
+        "referenceId": "Contacts__cRef1"
+      },
+      "Name": "Pablo Ramirez",
+      "Email__c": "pablo@example.com",
+      "Phone__c": "3116160101",
+      "City__c": "Bogota",
+      "Address__c": "CL 24  35 ",
+      "Gender__c": "Masculino"
+    },
+    {
+      "attributes": {
+        "type": "Contacts__c",
+        "referenceId": "Contacts__cRef2"
+      },
+      "Name": "María González",
+      "Email__c": "maria.gonzalez@example.com",
+      "Phone__c": "3101234567",
+      "City__c": "Medellin",
+      "Address__c": "Cra 45 #10-12",
+      "Gender__c": "Femenino"
+    },
+    {
+      "attributes": {
+        "type": "Contacts__c",
+        "referenceId": "Contacts__cRef3"
+      },
+      "Name": "Laura Martínez",
+      "Email__c": "laura.martinez@example.com",
+      "Phone__c": "3209876543",
+      "City__c": "Cali",
+      "Address__c": "Calle 50 #20-30",
+      "Gender__c": "Femenino"
+    },
+    {
+      "attributes": {
+        "type": "Contacts__c",
+        "referenceId": "Contacts__cRef4"
+      },
+      "Name": "Carlos Pérez",
+      "Email__c": "carlos.perez@example.com",
+      "Phone__c": "3016549872",
+      "City__c": "Barranquilla",
+      "Address__c": "Av. 56 #7-15",
+      "Gender__c": "Masculino"
+    },
+    {
+      "attributes": {
+        "type": "Contacts__c",
+        "referenceId": "Contacts__cRef5"
+      },
+      "Name": "Andrés Torres",
+      "Email__c": "andres.torres@example.com",
+      "Phone__c": "3001112222",
+      "City__c": "Cartagena",
+      "Address__c": "Cl. 23 #5-67",
+      "Gender__c": "Masculino"
+    },
+    {
+      "attributes": {
+        "type": "Contacts__c",
+        "referenceId": "Contacts__cRef6"
+      },
+      "Name": "Sofia Rodríguez",
+      "Email__c": "sofia.rodriguez@example.com",
+      "Phone__c": "3044445555",
+      "City__c": "Bucaramanga",
+      "Address__c": "Calle 9 #8-90",
+      "Gender__c": "Femenino"
+    },
+    {
+      "attributes": {
+        "type": "Contacts__c",
+        "referenceId": "Contacts__cRef7"
+      },
+      "Name": "Daniela Castaño",
+      "Email__c": "daniela.castano@example.com",
+      "Phone__c": "3052223333",
+      "City__c": "Pereira",
+      "Address__c": "Cra 12 #14-28",
+      "Gender__c": "Femenino"
+    },
+    {
+      "attributes": {
+        "type": "Contacts__c",
+        "referenceId": "Contacts__cRef8"
+      },
+      "Name": "Jorge García",
+      "Email__c": "jorge.garcia@example.com",
+      "Phone__c": "3157778888",
+      "City__c": "Manizales",
+      "Address__c": "Cl. 40 #20-10",
+      "Gender__c": "Masculino"
+    },
+    {
+      "attributes": {
+        "type": "Contacts__c",
+        "referenceId": "Contacts__cRef9"
+      },
+      "Name": "Ana Trujillo",
+      "Email__c": "ana.trujillo@example.com",
+      "Phone__c": "3119990000",
+      "City__c": "Armenia",
+      "Address__c": "Av. Bolívar #15-20",
+      "Gender__c": "Femenino"
+    },
+    {
+      "attributes": {
+        "type": "Contacts__c",
+        "referenceId": "Contacts__cRef10"
+      },
+      "Name": "Felipe Rojas",
+      "Email__c": "felipe.rojas@example.com",
+      "Phone__c": "3125551111",
+      "City__c": "Santa Marta",
+      "Address__c": "Cl. 2 #4-36",
+      "Gender__c": "Masculino"
+    }
+  ]
+}
