@@ -1,6 +1,43 @@
 <template>
   <template if:true={contacts}>
-    <div style="height: 517px">
+    <div
+      class="slds-box slds-p-around_none slds-m-top_x-small slds-m-bottom_medium slds-m-horizontal_none"
+    >
+      <lightning-layout horizontal-align="spread" vertical-align="end">
+        <lightning-layout-item padding="around-small" flexibility="grow">
+          <lightning-input
+            label="Realice la búsqueda de un contacto por nombre."
+            placeholder="Realice la búsqueda de un contacto por nombre..."
+            type="search"
+            value={searchKey}
+            onchange={handleSearch}
+          ></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item flexibility="auto" padding="around-small">
+          <lightning-button
+            variant="brand"
+            label="Crear Contacto"
+            title="Primary action"
+            onclick={handleCreateContact}
+          ></lightning-button>
+        </lightning-layout-item>
+        <lightning-layout-item
+          flexibility="auto"
+          class="slds-p-vertical_small slds-p-right_small"
+        >
+          <lightning-button
+            variant="destructive"
+            label="Eliminar contactos"
+            title="Destructive action"
+            onclick={handleDeleteContacts}
+          ></lightning-button>
+        </lightning-layout-item>
+      </lightning-layout>
+    </div>
+    <div
+      style="height: 425px"
+      class="slds-box slds-p-around_none slds-m-top_x-small slds-m-bottom_medium slds-m-horizontal_none"
+    >
       <lightning-datatable
         key-field="id"
         data={contacts}
