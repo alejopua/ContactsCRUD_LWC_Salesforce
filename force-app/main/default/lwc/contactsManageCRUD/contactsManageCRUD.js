@@ -1,5 +1,7 @@
-import { LightningElement, wire } from 'lwc';
+import { LightningElement, track, wire } from 'lwc';
 import getAllContacts from '@salesforce/apex/ContactsManageSevice.getAllContacts';
+import { refreshApex } from '@salesforce/apex';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 // CONSTANTES ROW_ACTIONS y COLUMNS (Se definen fuera de la clase para mantener el código limpio)
 // 1. contiene los objetos que describen las acciones disponibles
@@ -24,13 +26,21 @@ const COLUMNS = [
 
 export default class ContactsManageCRUD extends LightningElement {
   // 3. Propiedades
+  @track recordId;
+
+  wiredContactsResult;
+
   contacts;
   error;
   columns = COLUMNS;
 
+  isOpenModal = false;
+
   // 4. Obtenemos la lista de contactos desde el ContactManageService via wire
   @wire(getAllContacts)
-  wiredContacts({ error, data }) {
+  wiredContacts(result) {
+    this.wiredContactsResult = result;
+    const { data, error } = result;
     if (data) {
       this.contacts = data;
       this.error = undefined;
@@ -43,16 +53,43 @@ export default class ContactsManageCRUD extends LightningElement {
   // 5. Maneja el evento de acciones en la fila de la tabla (edit, delete)
   handleRowAction(event) {
     const actionName = event.detail.action.name;
-    const row = event.detail.row;
+    const rowId = event.detail.row.Id;
 
     switch (actionName) {
       case 'edit':
-        console.log('Edit row:', row);
+        this.isOpenModal = true;
+        this.recordId = rowId;
         break;
       case 'delete':
-        console.log('Delete row:', row);
         break;
       default:
     }
+  }
+
+  closeModal() {
+    this.isOpenModal = false;
+  }
+
+  handleSuccess(event) {
+    this.showToast('Success', 'Contact updated', 'success');
+    this.isOpenModal = false;
+    this.refreshData();
+  }
+
+  refreshData() {
+    return this.wiredContactsResult
+      ? refreshApex(this.wiredContactsResult)
+      : undefined;
+  }
+
+  // Funcion reutilizable para mostrar mensajes Toast
+  showToast(title, message, variant) {
+    this.dispatchEvent(
+      new ShowToastEvent({
+        title,
+        message,
+        variant,
+      })
+    );
   }
 }
