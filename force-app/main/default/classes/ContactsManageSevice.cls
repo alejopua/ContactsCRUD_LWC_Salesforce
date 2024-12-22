@@ -7,12 +7,21 @@ public with sharing class ContactsManageSevice {
    * @throws AuraHandledException si ocurre un error al consultar los contactos.
    */
   @AuraEnabled(cacheable=true)
-  public static List<Contacts__c> getAllContacts() {
+  public static List<Contacts__c> getContacts(String searchTerm) {
     try {
-      return [
-        SELECT Id, Name, Email__c, Phone__c, Address__C, City__C, Gender__C
-        FROM Contacts__c
-      ];
+      if (String.isNotBlank(searchTerm)) {
+        String searchTermWithout = '%' + searchTerm + '%';
+        return [
+          SELECT Id, Name, Email__c, Phone__c, Address__c, City__c, Gender__c
+          FROM Contacts__c
+          WHERE Name LIKE :searchTermWithout
+        ];
+      } else {
+        return [
+          SELECT Id, Name, Email__c, Phone__c, Address__C, City__C, Gender__C
+          FROM Contacts__c
+        ];
+      }
     } catch (Exception e) {
       throw new AuraHandledException(
         'Error al consultar los contactos: ' + e.getMessage()
