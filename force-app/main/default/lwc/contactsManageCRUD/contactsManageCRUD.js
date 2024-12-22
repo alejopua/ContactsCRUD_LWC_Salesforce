@@ -1,5 +1,5 @@
 import { LightningElement, track, wire } from 'lwc';
-import getAllContacts from '@salesforce/apex/ContactsManageSevice.getAllContacts';
+import getContacts from '@salesforce/apex/ContactsManageSevice.getContacts';
 import deleteContact from '@salesforce/apex/ContactsManageSevice.deleteContact';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -13,7 +13,7 @@ const ROW_ACTIONS = [
 
 // 2. Configura las columnas que se mostrarán en el lightning-datatable.
 const COLUMNS = [
-  { label: 'Name', fieldName: 'Name' },
+  { label: 'Nombre', fieldName: 'Name' },
   { label: 'Email', fieldName: 'Email__c', type: 'email' },
   { label: 'Phone', fieldName: 'Phone__c', type: 'phone' },
   { label: 'Address', fieldName: 'Address__c' },
@@ -28,6 +28,7 @@ const COLUMNS = [
 export default class ContactsManageCRUD extends LightningElement {
   // 3. Propiedades
   @track recordId;
+  searchKey = ''; // Término ingresado en el campo de búsqueda
 
   wiredContactsResult;
 
@@ -38,7 +39,7 @@ export default class ContactsManageCRUD extends LightningElement {
   isOpenModal = false;
 
   // 4. Obtenemos la lista de contactos desde el ContactManageService via wire
-  @wire(getAllContacts)
+  @wire(getContacts, { searchTerm: '$searchKey' })
   wiredContacts(result) {
     this.wiredContactsResult = result;
     const { data, error } = result;
@@ -92,6 +93,10 @@ export default class ContactsManageCRUD extends LightningElement {
     this.showToast('Success', 'Contact updated', 'success');
     this.isOpenModal = false;
     this.refreshData();
+  }
+
+  handleSearch(event) {
+    this.searchKey = event.target.value;
   }
 
   refreshData() {
