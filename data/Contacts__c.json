@@ -119,6 +119,138 @@
       "City__c": "Santa Marta",
       "Address__c": "Cl. 2 #4-36",
       "Gender__c": "Masculino"
+    },
+    {
+      "attributes": {
+        "type": "Contacts__c",
+        "referenceId": "Contacts__cRef11"
+      },
+      "Name": "Marta López",
+      "Email__c": "marta.lopez@example.com",
+      "Phone__c": "3209876544",
+      "City__c": "Cali",
+      "Address__c": "Calle 51 #21-31",
+      "Gender__c": "Femenino"
+    },
+    {
+      "attributes": {
+        "type": "Contacts__c",
+        "referenceId": "Contacts__cRef12"
+      },
+      "Name": "Juan Camilo Hernández",
+      "Email__c": "juan.hernandez@example.com",
+      "Phone__c": "3146667777",
+      "City__c": "Cúcuta",
+      "Address__c": "Av. Las Americas #12-34",
+      "Gender__c": "Masculino"
+    },
+    {
+      "attributes": {
+        "type": "Contacts__c",
+        "referenceId": "Contacts__cRef13"
+      },
+      "Name": "Valentina Soto",
+      "Email__c": "valentina.soto@example.com",
+      "Phone__c": "3138889999",
+      "City__c": "Ibagué",
+      "Address__c": "Calle 25 #16-20",
+      "Gender__c": "Femenino"
+    },
+    {
+      "attributes": {
+        "type": "Contacts__c",
+        "referenceId": "Contacts__cRef14"
+      },
+      "Name": "Luis Fernando Morales",
+      "Email__c": "luis.morales@example.com",
+      "Phone__c": "3175556666",
+      "City__c": "Pasto",
+      "Address__c": "Cl. 30 #22-10",
+      "Gender__c": "Masculino"
+    },
+    {
+      "attributes": {
+        "type": "Contacts__c",
+        "referenceId": "Contacts__cRef15"
+      },
+      "Name": "Catalina Vásquez",
+      "Email__c": "catalina.vasquez@example.com",
+      "Phone__c": "3123334444",
+      "City__c": "Montería",
+      "Address__c": "Av. Central #5-50",
+      "Gender__c": "Femenino"
+    },
+    {
+      "attributes": {
+        "type": "Contacts__c",
+        "referenceId": "Contacts__cRef16"
+      },
+      "Name": "Sebastián Gómez",
+      "Email__c": "sebastian.gomez@example.com",
+      "Phone__c": "3197778888",
+      "City__c": "Villavicencio",
+      "Address__c": "Calle 18 #9-15",
+      "Gender__c": "Masculino"
+    },
+    {
+      "attributes": {
+        "type": "Contacts__c",
+        "referenceId": "Contacts__cRef17"
+      },
+      "Name": "Daniela Ruiz",
+      "Email__c": "daniela.ruiz@example.com",
+      "Phone__c": "3112223333",
+      "City__c": "Neiva",
+      "Address__c": "Av. 10 #14-22",
+      "Gender__c": "Femenino"
+    },
+    {
+      "attributes": {
+        "type": "Contacts__c",
+        "referenceId": "Contacts__cRef18"
+      },
+      "Name": "Miguel Ángel Torres",
+      "Email__c": "miguel.torres@example.com",
+      "Phone__c": "3184445555",
+      "City__c": "Santa Fe de Bogotá",
+      "Address__c": "Carrera 45 #32-10",
+      "Gender__c": "Masculino"
+    },
+    {
+      "attributes": {
+        "type": "Contacts__c",
+        "referenceId": "Contacts__cRef19"
+      },
+      "Name": "Andrea Mejía",
+      "Email__c": "andrea.mejia@example.com",
+      "Phone__c": "3105556666",
+      "City__c": "Sincelejo",
+      "Address__c": "Cl. 8 #19-25",
+      "Gender__c": "Femenino"
+    },
+    {
+      "attributes": {
+        "type": "Contacts__c",
+        "referenceId": "Contacts__cRef20"
+      },
+      "Name": "Fernando Salazar",
+      "Email__c": "fernando.salazar@example.com",
+      "Phone__c": "3179990000",
+      "City__c": "Bello",
+      "Address__c": "Av. 3 #11-30",
+      "Gender__c": "Masculino"
+    },
+    {
+      "attributes": {
+        "type": "Contacts__c",
+        "referenceId": "Contacts__cRef21"
+      },
+      "Name": "Luisa Fernanda Castillo",
+      "Email__c": "luisa.castillo@example.com",
+      "Phone__c": "3127778888",
+      "City__c": "Armenia",
+      "Address__c": "Calle 12 #7-45",
+      "Gender__c": "Femenino"
     }
   ]
 }
