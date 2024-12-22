@@ -1,5 +1,6 @@
 import { LightningElement, track, wire } from 'lwc';
 import getAllContacts from '@salesforce/apex/ContactsManageSevice.getAllContacts';
+import deleteContact from '@salesforce/apex/ContactsManageSevice.deleteContact';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
@@ -61,9 +62,26 @@ export default class ContactsManageCRUD extends LightningElement {
         this.recordId = rowId;
         break;
       case 'delete':
+        this.deleteRecordIdFromContact(rowId);
         break;
       default:
     }
+  }
+
+  // 6. Elimina un contacto
+  deleteRecordIdFromContact(contactId) {
+    deleteContact({ contactId: contactId })
+      .then(() => {
+        this.showToast('Success', 'Contacto Eliminado', 'success');
+        this.refreshData();
+      })
+      .catch((error) => {
+        this.showToast(
+          'Error al eliminar el contacto',
+          error.body.message,
+          'error'
+        );
+      });
   }
 
   closeModal() {
