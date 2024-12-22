@@ -3,14 +3,14 @@
     <div
       class="slds-box slds-p-around_none slds-m-top_x-small slds-m-bottom_medium slds-m-horizontal_none"
     >
-      <lightning-layout horizontal-align="spread" vertical-align="end">
+      <lightning-layout horizontal-align="spread" vertical-align="center">
         <lightning-layout-item padding="around-small" flexibility="grow">
           <lightning-input
-            label="Realice la búsqueda de un contacto por nombre."
             placeholder="Realice la búsqueda de un contacto por nombre..."
             type="search"
             value={searchKey}
             onchange={handleSearch}
+            variant="label-hidden"
           ></lightning-input>
         </lightning-layout-item>
         <lightning-layout-item flexibility="auto" padding="around-small">
