@@ -37,6 +37,7 @@ export default class ContactsManageCRUD extends LightningElement {
   columns = COLUMNS;
 
   isOpenModal = false;
+  isEditContact = false;
 
   // 4. Obtenemos la lista de contactos desde el ContactManageService via wire
   @wire(getContacts, { searchTerm: '$searchKey' })
@@ -59,8 +60,7 @@ export default class ContactsManageCRUD extends LightningElement {
 
     switch (actionName) {
       case 'edit':
-        this.isOpenModal = true;
-        this.recordId = rowId;
+        this.handleEditContact(rowId);
         break;
       case 'delete':
         this.deleteRecordIdFromContact(rowId);
@@ -85,27 +85,49 @@ export default class ContactsManageCRUD extends LightningElement {
       });
   }
 
+  // 7. Abre el modal para crear un nuevo contacto
+  handleCreateContact() {
+    this.isOpenModal = true;
+    this.isEditContact = false;
+    this.recordId = undefined;
+  }
+
+  // 8. Abre el modal para editar un nuevo contacto
+  handleEditContact(contactId) {
+    this.isOpenModal = true;
+    this.isEditContact = true;
+    this.recordId = contactId;
+  }
+
+  // 9. Cierra el modal
   closeModal() {
     this.isOpenModal = false;
   }
 
+  // 10. Maneja el evento de éxito al crear o editar un contacto
   handleSuccess(event) {
-    this.showToast('Success', 'Contact updated', 'success');
+    if (this.isEditContact) {
+      this.showToast('Success', 'Contacto Actualizado', 'success');
+    } else {
+      this.showToast('Success', 'Contacto Creado', 'success');
+    }
     this.isOpenModal = false;
     this.refreshData();
   }
 
+  // 11. Maneja el evento de búsqueda
   handleSearch(event) {
     this.searchKey = event.target.value;
   }
 
+  // 12. Refresca la lista de contactos
   refreshData() {
     return this.wiredContactsResult
       ? refreshApex(this.wiredContactsResult)
       : undefined;
   }
 
-  // Funcion reutilizable para mostrar mensajes Toast
+  // 13. Función reutilizable para la creación de un Toast
   showToast(title, message, variant) {
     this.dispatchEvent(
       new ShowToastEvent({
