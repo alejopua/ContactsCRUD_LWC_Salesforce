@@ -112,7 +112,14 @@ export default class ContactsManageCRUD extends LightningElement {
     this.selectedContacts = selectedRows;
   }
 
-  // 11.1 Elimina los contactos seleccionados
+  // 11.1 Deselecciona todas las filas
+  deselectAllRows() {
+    const dataTable = this.template.querySelector('lightning-datatable');
+    dataTable.selectedRows = [];
+    this.selectedContacts = [];
+  }
+
+  // 11.2 Elimina los contactos seleccionados
   handleDeleteContacts() {
     const selectedIds = this.selectedContacts.map((contact) => contact.Id); // Extraer los Ids de los contactos seleccionados en una lista
     if (selectedIds.length === 0) {
@@ -122,6 +129,7 @@ export default class ContactsManageCRUD extends LightningElement {
     bulkDeleteContacts({ contactIds: selectedIds })
       .then(() => {
         this.showToast('Success', 'Contactos Eliminados', 'success');
+        this.deselectAllRows();
         this.refreshData();
       })
       .catch((error) => {
