@@ -53,16 +53,6 @@ public with sharing class ContactsManageSevice {
    */
   @AuraEnabled
   public static void deleteContact(String contactId) {
-    // Verificar permisos de eliminación en el objeto
-    Boolean isDeletable;
-    isDeletable = Schema.sObjectType.Contacts__c.isDeletable();
-
-    if (!isDeletable) {
-      throw new AuraHandledException(
-        'No tienes permisos para eliminar contactos.'
-      );
-    }
-
     try {
       // Consultar el registro a eliminar
       Contacts__c contactToDelete = [
@@ -107,16 +97,6 @@ public with sharing class ContactsManageSevice {
    */
   @AuraEnabled
   public static void bulkDeleteContacts(List<Id> contactIds) {
-    // Verificar permisos de eliminación en el objeto
-    Boolean isDeletable;
-    isDeletable = Schema.sObjectType.Contacts__c.isDeletable();
-
-    if (!isDeletable) {
-      throw new AuraHandledException(
-        'No tienes permisos para eliminar contactos.'
-      );
-    }
-
     try {
       List<Contacts__c> contactsToDelete = [
         SELECT Id
