@@ -35,7 +35,7 @@
       </lightning-layout>
     </div>
     <div
-      style="height: 425px"
+      style="height: 480px"
       class="slds-box slds-p-around_none slds-m-top_x-small slds-m-bottom_medium slds-m-horizontal_none"
     >
       <lightning-datatable
@@ -65,6 +65,7 @@
               object-api-name="Contacts__c"
               record-id={recordId}
               onsuccess={handleSuccess}
+              onsubmit={handleSubmit}
             >
               <div class="slds-m-around_medium slds-p-around_medium">
                 <lightning-input-field
