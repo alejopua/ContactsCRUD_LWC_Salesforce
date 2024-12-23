@@ -98,4 +98,55 @@ public with sharing class ContactsManageSevice {
       );
     }
   }
+
+  /**
+   * Elimina múltiples contactos de tipo Contacts__c de la organización basados en sus Ids.
+   *
+   * @param contactIds Lista de Ids de los Contacts__c a eliminar.
+   * @throws AuraHandledException si alguno de los contactIds es inválido, los registros no existen, el usuario no tiene permisos o ocurre un error durante la eliminación.
+   */
+  @AuraEnabled
+  public static void bulkDeleteContacts(List<Id> contactIds) {
+    // Verificar permisos de eliminación en el objeto
+    Boolean isDeletable;
+    isDeletable = Schema.sObjectType.Contacts__c.isDeletable();
+
+    if (!isDeletable) {
+      throw new AuraHandledException(
+        'No tienes permisos para eliminar contactos.'
+      );
+    }
+
+    try {
+      List<Contacts__c> contactsToDelete = [
+        SELECT Id
+        FROM Contacts__c
+        WHERE Id IN :contactIds
+      ];
+
+      // Verificar que el registro existe
+      if (contactsToDelete == null) {
+        throw new AuraHandledException(
+          'Uno o mas contactos no fueron encontrados al parecer ya fueron eliminados.'
+        );
+      }
+
+      delete contactsToDelete;
+    } catch (QueryException qe) {
+      // Manejar errores de consulta
+      throw new AuraHandledException(
+        'Error al buscar los contactos: ' + qe.getMessage()
+      );
+    } catch (DmlException de) {
+      // Manejar errores de DML
+      throw new AuraHandledException(
+        'Error al eliminar los contactos: ' + de.getMessage()
+      );
+    } catch (Exception e) {
+      // Manejar cualquier otra excepción
+      throw new AuraHandledException(
+        'Ocurrió un error inesperado: ' + e.getMessage()
+      );
+    }
+  }
 }
