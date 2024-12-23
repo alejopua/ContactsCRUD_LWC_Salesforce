@@ -1,6 +1,7 @@
 import { LightningElement, track, wire } from 'lwc';
 import getContacts from '@salesforce/apex/ContactsManageSevice.getContacts';
 import deleteContact from '@salesforce/apex/ContactsManageSevice.deleteContact';
+import bulkDeleteContacts from '@salesforce/apex/ContactsManageSevice.bulkDeleteContacts';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
@@ -26,20 +27,13 @@ const COLUMNS = [
 ];
 
 export default class ContactsManageCRUD extends LightningElement {
-  // 3. Propiedades
-  @track recordId;
+  // 1. Decoradores y propiedades reactivas
+  @track recordId; // ID del registro actual
+
+  // 2. Propiedades relacionadas con la búsqueda
   searchKey = ''; // Término ingresado en el campo de búsqueda
 
-  wiredContactsResult;
-
-  contacts;
-  error;
-  columns = COLUMNS;
-
-  isOpenModal = false;
-  isEditContact = false;
-
-  // 4. Obtenemos la lista de contactos desde el ContactManageService via wire
+  // 3. Propiedades obtenidas mediante wire
   @wire(getContacts, { searchTerm: '$searchKey' })
   wiredContacts(result) {
     this.wiredContactsResult = result;
@@ -52,8 +46,21 @@ export default class ContactsManageCRUD extends LightningElement {
       this.contacts = [];
     }
   }
+  wiredContactsResult;
 
-  // 5. Maneja el evento de acciones en la fila de la tabla (edit, delete)
+  // 4. Almacenamiento de datos y errores
+  contacts; // Lista de contactos obtenida
+  error; // Error en caso de que ocurra al obtener los contactos
+
+  // 5. Configuración de columnas para la tabla
+  columns = COLUMNS;
+
+  // 6. Estado de la interfaz de usuario (UI)
+  isOpenModal = false; // Controla la visibilidad del modal
+  isEditContact = false; // Indica si se está editando un contacto
+  selectedContacts = []; // Lista de contactos seleccionados
+
+  // 7. Maneja el evento de acciones en la fila de la tabla (edit, delete)
   handleRowAction(event) {
     const actionName = event.detail.action.name;
     const rowId = event.detail.row.Id;
@@ -69,7 +76,7 @@ export default class ContactsManageCRUD extends LightningElement {
     }
   }
 
-  // 6. Elimina un contacto
+  // 8. Elimina un contacto
   deleteRecordIdFromContact(contactId) {
     deleteContact({ contactId: contactId })
       .then(() => {
@@ -85,26 +92,48 @@ export default class ContactsManageCRUD extends LightningElement {
       });
   }
 
-  // 7. Abre el modal para crear un nuevo contacto
+  // 9. Abre el modal para crear un nuevo contacto
   handleCreateContact() {
     this.isOpenModal = true;
     this.isEditContact = false;
     this.recordId = undefined;
   }
 
-  // 8. Abre el modal para editar un nuevo contacto
+  // 10. Abre el modal para editar un nuevo contacto
   handleEditContact(contactId) {
     this.isOpenModal = true;
     this.isEditContact = true;
     this.recordId = contactId;
   }
 
-  // 9. Cierra el modal
-  closeModal() {
-    this.isOpenModal = false;
+  // 11. Maneja la selección de filas en la tabla
+  handleRowSelection(event) {
+    const selectedRows = event.detail.selectedRows;
+    this.selectedContacts = selectedRows;
   }
 
-  // 10. Maneja el evento de éxito al crear o editar un contacto
+  // 11.1 Elimina los contactos seleccionados
+  handleDeleteContacts() {
+    const selectedIds = this.selectedContacts.map((contact) => contact.Id); // Extraer los Ids de los contactos seleccionados en una lista
+    if (selectedIds.length === 0) {
+      this.showToast('Info', 'Seleccione al menos un contacto', 'info');
+      return;
+    }
+    bulkDeleteContacts({ contactIds: selectedIds })
+      .then(() => {
+        this.showToast('Success', 'Contactos Eliminados', 'success');
+        this.refreshData();
+      })
+      .catch((error) => {
+        this.showToast(
+          'Error al eliminar los contactos',
+          error.body.message,
+          'error'
+        );
+      });
+  }
+
+  // 12. Maneja el evento de éxito al crear o editar un contacto
   handleSuccess(event) {
     if (this.isEditContact) {
       this.showToast('Success', 'Contacto Actualizado', 'success');
@@ -115,19 +144,23 @@ export default class ContactsManageCRUD extends LightningElement {
     this.refreshData();
   }
 
-  // 11. Maneja el evento de búsqueda
+  // 13. Maneja el evento de búsqueda
   handleSearch(event) {
     this.searchKey = event.target.value;
   }
 
-  // 12. Refresca la lista de contactos
+  // 14. Refresca la lista de contactos
   refreshData() {
     return this.wiredContactsResult
       ? refreshApex(this.wiredContactsResult)
       : undefined;
   }
 
-  // 13. Función reutilizable para la creación de un Toast
+  closeModal() {
+    this.isOpenModal = false;
+  }
+
+  // 15. Función reutilizable para la creación de un Toast
   showToast(title, message, variant) {
     this.dispatchEvent(
       new ShowToastEvent({
