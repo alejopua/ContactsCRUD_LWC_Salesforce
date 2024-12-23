@@ -1,5 +1,21 @@
 public with sharing class ContactsManageSevice {
   /**
+   * `MÉTODO DE ACTUALIZACIÓN DE CONTACTOS`:
+   * He decidido no crear un método Apex personalizado porque:
+   * - Utilizar @wire con `getContacts` y `@AuraEnabled(cacheable=true)` permite almacenar los datos en caché de manera eficiente.
+   * - El componente `lightning-record-edit-form` gestiona automáticamente las actualizaciones y la validación de campos, reduciendo la necesidad de código adicional.
+   * - Con `refreshApex`, puedo actualizar los datos en el componente sin realizar llamadas adicionales al servidor, optimizando el rendimiento.
+   */
+
+  /**
+   * `MÉTODO DE CREACIÓN DE CONTACTO`:
+   * Opté por no implementar un método Apex personalizado porque:
+   * - El componente `lightning-record-edit-form` maneja automáticamente la creación de registros, simplificando el proceso.
+   * - Este componente valida los campos según las configuraciones del objeto, lo que minimiza errores y asegura la integridad de los datos.
+   * - Además, gestiona la seguridad a nivel de campo, garantizando que los usuarios solo puedan ver y editar los datos para los que tienen permisos, sin necesidad de lógica adicional en Apex.
+   */
+
+  /**
    * Devuelve una lista de contactos con su información básica.
    *
    * Esta consulta puede ser almacenada en caché (cacheable=true) evitando consultas repetitivas.
@@ -82,15 +98,4 @@ public with sharing class ContactsManageSevice {
       );
     }
   }
-
-  /**
-   * Para el `MÉTODO DE ACTUALIZACIÓN DE CONTACTOS`, he optado por la siguiente alternativa:
-   * Utilizando la decoración @wire en el LWC para llamar a `getAllContacts` de mi servicio, junto con @AuraEnabled(cacheable=true),
-   * logramos almacenar el resultado de la llamada a Apex en caché. Además, al usar el componente `lightning-record-edit-form`,
-   * se manejan automáticamente las operaciones de actualización sin necesidad de crear un método Apex personalizado.
-   * `lightning-record-edit-form` también facilita la validación de campos al permitir definir previamente, desde el objeto,
-   * cuáles campos son obligatorios y cuáles no, evitando así errores durante la actualización.
-   * Combinado con `refreshApex` en LWC, podemos actualizar los datos en el componente sin realizar llamadas adicionales al servidor.
-   * En lugar de eso, reutilizamos la respuesta almacenada en caché y solo actualizamos los datos si han cambiado.
-   */
 }
