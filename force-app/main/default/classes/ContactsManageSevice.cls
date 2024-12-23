@@ -24,24 +24,18 @@ public with sharing class ContactsManageSevice {
    */
   @AuraEnabled(cacheable=true)
   public static List<Contacts__c> getContacts(String searchTerm) {
-    try {
-      if (String.isNotBlank(searchTerm)) {
-        String searchTermWithout = '%' + searchTerm + '%';
-        return [
-          SELECT Id, Name, Email__c, Phone__c, Address__c, City__c, Gender__c
-          FROM Contacts__c
-          WHERE Name LIKE :searchTermWithout
-        ];
-      } else {
-        return [
-          SELECT Id, Name, Email__c, Phone__c, Address__C, City__C, Gender__C
-          FROM Contacts__c
-        ];
-      }
-    } catch (Exception e) {
-      throw new AuraHandledException(
-        'Error al consultar los contactos: ' + e.getMessage()
-      );
+    if (String.isNotBlank(searchTerm)) {
+      String searchTermWithout = '%' + searchTerm + '%';
+      return [
+        SELECT Id, Name, Email__c, Phone__c, Address__c, City__c, Gender__c
+        FROM Contacts__c
+        WHERE Name LIKE :searchTermWithout
+      ];
+    } else {
+      return [
+        SELECT Id, Name, Email__c, Phone__c, Address__C, City__C, Gender__C
+        FROM Contacts__c
+      ];
     }
   }
 
@@ -49,7 +43,7 @@ public with sharing class ContactsManageSevice {
    * Elimina un contacto de tipo Contacts__c de la organización basado en su Id.
    *
    * @param contactId Id del Contacts__c a eliminar.
-   * @throws AuraHandledException si el contactId es inválido, el registro no existe, el usuario no tiene permisos o ocurre un error durante la eliminación.
+   * @throws AuraHandledException si el contactId es inválido o ya no existe, se lanzan la excepción QueryException.
    */
   @AuraEnabled
   public static void deleteContact(String contactId) {
@@ -62,29 +56,12 @@ public with sharing class ContactsManageSevice {
         LIMIT 1
       ];
 
-      // Verificar que el registro existe
-      if (contactToDelete == null) {
-        throw new AuraHandledException(
-          'Contacto no encontrado al parecer ya fue eliminado.'
-        );
-      }
-
       // Realizar la eliminación
       delete contactToDelete;
-    } catch (QueryException qe) {
+    } catch (QueryException e) {
       // Manejar errores de consulta
       throw new AuraHandledException(
-        'Error al buscar el contacto: ' + qe.getMessage()
-      );
-    } catch (DmlException de) {
-      // Manejar errores de DML
-      throw new AuraHandledException(
-        'Error al eliminar el contacto: ' + de.getMessage()
-      );
-    } catch (Exception e) {
-      // Manejar cualquier otra excepción
-      throw new AuraHandledException(
-        'Ocurrió un error inesperado: ' + e.getMessage()
+        'Error al eliminar el contacto: ' + e.getMessage()
       );
     }
   }
@@ -104,28 +81,11 @@ public with sharing class ContactsManageSevice {
         WHERE Id IN :contactIds
       ];
 
-      // Verificar que el registro existe
-      if (contactsToDelete == null) {
-        throw new AuraHandledException(
-          'Uno o mas contactos no fueron encontrados al parecer ya fueron eliminados.'
-        );
-      }
-
       delete contactsToDelete;
-    } catch (QueryException qe) {
-      // Manejar errores de consulta
-      throw new AuraHandledException(
-        'Error al buscar los contactos: ' + qe.getMessage()
-      );
-    } catch (DmlException de) {
+    } catch (AuraHandledException de) {
       // Manejar errores de DML
       throw new AuraHandledException(
         'Error al eliminar los contactos: ' + de.getMessage()
-      );
-    } catch (Exception e) {
-      // Manejar cualquier otra excepción
-      throw new AuraHandledException(
-        'Ocurrió un error inesperado: ' + e.getMessage()
       );
     }
   }
