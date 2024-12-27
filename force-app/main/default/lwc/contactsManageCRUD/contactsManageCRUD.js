@@ -1,16 +1,12 @@
 import { LightningElement, track, wire } from 'lwc';
 import getContacts from '@salesforce/apex/ContactsManageSevice.getContacts';
-import deleteContact from '@salesforce/apex/ContactsManageSevice.deleteContact';
 import bulkDeleteContacts from '@salesforce/apex/ContactsManageSevice.bulkDeleteContacts';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 // CONSTANTES ROW_ACTIONS y COLUMNS (Se definen fuera de la clase para mantener el código limpio)
 // 1. contiene los objetos que describen las acciones disponibles
-const ROW_ACTIONS = [
-  { label: 'Edit', name: 'edit' },
-  { label: 'Delete', name: 'delete' },
-];
+const ROW_ACTIONS = [{ label: 'Edit', name: 'edit' }];
 
 // 2. Configura las columnas que se mostrarán en el lightning-datatable.
 const COLUMNS = [
@@ -74,9 +70,6 @@ export default class ContactsManageCRUD extends LightningElement {
       case 'edit':
         this.handleEditContact(rowId);
         break;
-      case 'delete':
-        this.deleteRecordIdFromContact(rowId);
-        break;
       default:
     }
   }
@@ -127,31 +120,16 @@ export default class ContactsManageCRUD extends LightningElement {
     }
   }
 
-  /***************************************
-   *        MÉTODOS PARA ELIMINAR
-   ***************************************/
-  // Elimina un contacto
-  deleteRecordIdFromContact(contactId) {
-    deleteContact({ contactId: contactId })
-      .then(() => {
-        this.showToast('Success', 'Contacto Eliminado', 'success');
-        this.refreshData();
-      })
-      .catch((error) => {
-        this.showToast(
-          'Error al eliminar el contacto',
-          error.body.message,
-          'error'
-        );
-      });
-  }
-
   // Deselecciona todas las filas
   deselectAllRows() {
     const dataTable = this.template.querySelector('lightning-datatable');
     dataTable.selectedRows = [];
     this.selectedContacts = [];
   }
+
+  /***************************************
+   *        MÉTODOS PARA ELIMINAR
+   ***************************************/
 
   // Elimina los contactos seleccionados
   handleDeleteContacts() {
