@@ -40,33 +40,6 @@ public with sharing class ContactsManageSevice {
   }
 
   /**
-   * Elimina un contacto de tipo Contacts__c de la organización basado en su Id.
-   *
-   * @param contactId Id del Contacts__c a eliminar.
-   * @throws AuraHandledException si el contactId es inválido o ya no existe, se lanzan la excepción QueryException.
-   */
-  @AuraEnabled
-  public static void deleteContact(String contactId) {
-    try {
-      // Consultar el registro a eliminar
-      Contacts__c contactToDelete = [
-        SELECT Id
-        FROM Contacts__c
-        WHERE Id = :contactId
-        LIMIT 1
-      ];
-
-      // Realizar la eliminación
-      delete contactToDelete;
-    } catch (QueryException e) {
-      // Manejar errores de consulta
-      throw new AuraHandledException(
-        'Error al eliminar el contacto: ' + e.getMessage()
-      );
-    }
-  }
-
-  /**
    * Elimina múltiples contactos de tipo Contacts__c de la organización basados en sus Ids.
    *
    * @param contactIds Lista de Ids de los Contacts__c a eliminar.
